@@ -41,16 +41,24 @@
 
             $scope.operadoras = [{
                 nome: "Oi",
-                codigo: "14"
+                codigo: 14,
+                categoria: "Celular"
             }, {
                 nome: "Tim",
-                codigo: "41"
+                codigo: 41,
+                categoria: "Celular"
             }, {
                 nome: "Vivo",
-                codigo: "15"
+                codigo: 15,
+                categoria: "Celular"
             }, {
-                nome: "Claro",
-                codigo: "21"
+                nome: "Embratel",
+                codigo: 21,
+                categoria: "Fixo"
+            }, {
+                nome: "GVT",
+                codigo: 25,
+                categoria: "Fixo"
             }]
 
             $scope.AdicuionarContatos = function(contato) {
@@ -79,7 +87,7 @@
         <input type="text" class="form-control" ng-model="contato.nome" name="nome" placeholder="Digite o Nome" />
         <input type="text" class="form-control" ng-model="contato.telefone" name="telefone" placeholder="Digite o Telefone" />
         <button type="button" class="btn btn-primary btn-block" ng-click="AdicuionarContatos(contato)" ng-disabled="!contato.nome || !contato.telefone">Salvar</button>
-        <select class="form-control" name="operadoras" ng-model="contato.operadora" id="operadoras" ng-options="operadora.nome for operadora in operadoras">
+        <select class="form-control" name="operadoras" ng-model="contato.operadora" id="operadoras" ng-options="operadora.codigo as operadora.nome group by operadora.categoria for operadora in operadoras">
             <option value="">Selecionar Operadora</option>
         </select>
     </div>
