@@ -10,22 +10,48 @@
             margin-right: auto;
             margin-top: 10px
         }
+        
+        table {
+            margin-top: 20px;
+        }
+        
+        .form-control {
+            margin-top: 10px;
+        }
+        
+        .btn {
+            margin-top: 10px;
+        }
     </style>
     <script type="text/javascript" src="lib/angular.js"></script>
     <script>
         angular.module("ListaTelefonica", []);
         angular.module("ListaTelefonica").controller("ListaTelefonicaCtrl", function($scope) {
-            $scope.message = "Lista Telefonica";
+            $scope.app = "Lista Telefonica";
             $scope.contatos = [{
                 nome: "Luis",
-                telefone: "11985777166"
+                telefone: "1321654654"
             }, {
                 nome: "Camila",
-                telefone: "11981771046"
+                telefone: "1321654654"
             }, {
                 nome: "Babys",
-                telefone: "1146774348"
+                telefone: "1321654654"
             }, ];
+
+            $scope.operadoras = [{
+                nome: "Oi",
+                codigo: "14"
+            }, {
+                nome: "Tim",
+                codigo: "41"
+            }, {
+                nome: "Vivo",
+                codigo: "15"
+            }, {
+                nome: "Claro",
+                codigo: "21"
+            }]
 
             $scope.AdicuionarContatos = function(contato) {
                 $scope.contatos.push(angular.copy(contato));
@@ -37,20 +63,25 @@
 
 <body ng-controller="ListaTelefonicaCtrl">
     <div class="jumbotron">
-        <h2>{{message}}</h2>
+        <h2>{{app}}</h2>
         <table class="table table-striped">
             <tr>
                 <th>Nome</th>
                 <th>Telefone</th>
+                <th>Operadora</th>
             </tr>
             <tr ng-repeat="contato in contatos">
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
+                <td>{{contato.operadora.nome}}</td>
             </tr>
         </table>
         <input type="text" class="form-control" ng-model="contato.nome" name="nome" placeholder="Digite o Nome" />
         <input type="text" class="form-control" ng-model="contato.telefone" name="telefone" placeholder="Digite o Telefone" />
-        <button type="button" class="btn btn-primary" ng-click="AdicuionarContatos(contato)" ng-disabled="!contato.nome || !contato.telefone">Salvar</button>
+        <button type="button" class="btn btn-primary btn-block" ng-click="AdicuionarContatos(contato)" ng-disabled="!contato.nome || !contato.telefone">Salvar</button>
+        <select class="form-control" name="operadoras" ng-model="contato.operadora" id="operadoras" ng-options="operadora.nome for operadora in operadoras">
+            <option value="">Selecionar Operadora</option>
+        </select>
     </div>
 
 
