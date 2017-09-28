@@ -38,8 +38,9 @@
         }
     </style>
     <script type="text/javascript" src="lib/angular.js"></script>
+    <script type="text/javascript" src="lib/angular-messages.js"></script>
     <script>
-        angular.module("ListaTelefonica", []);
+        angular.module("ListaTelefonica", ["ngMessages"]);
         angular.module("ListaTelefonica").controller("ListaTelefonicaCtrl", function($scope) {
             $scope.app = "Lista Telefonica";
             $scope.contatos = [{
@@ -81,6 +82,7 @@
             $scope.AdicuionarContatos = function(contato) {
                 $scope.contatos.push(angular.copy(contato));
                 delete $scope.contato;
+                $scope.contatoForm.$setPristine();
             }
 
             $scope.ApagarContatos = function(contatos) {
@@ -120,18 +122,37 @@
         </table>
 
         <form name="contatoForm">
-            <input type="text" class="form-control" ng-model="contato.nome" name="nome" placeholder="Digite o Nome" ng-required="true" />
-            <input type="text" class="form-control" ng-model="contato.telefone" name="telefone" placeholder="Digite o Telefone" ng-required="true" />
+            <input type="text" class="form-control" ng-model="contato.nome" name="nome" placeholder="Digite o Nome" ng-required="true" maxlength="20" ng-minlength="4" />
+            <input type="text" class="form-control" ng-model="contato.telefone" name="telefone" placeholder="ddd 00000000" ng-required="true" maxlength="11" ng-minlength="10" ng-pattern="/^[0-9]/" />
             <select class="form-control" name="operadoras" ng-model="contato.operadora" id="operadoras" ng-required="true" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
             <option value="">Selecionar Operadora</option>
         </select>
         </form>
-        <div ng-show="contatoForm.nome.$invalid" class="alert alert-danger">
-            Por favor preencha o Nome
+
+        <div ng-messages="contatoForm.nome.$error">
+            <div ng-message="required" class="alert alert-danger">
+                Por favor preencha o Nome
+            </div>
+            <div ng-message="minlength" class="alert alert-danger">
+                Campo nome deve ter mais que 4 caracteres
+            </div>
         </div>
-        <div ng-show="contatoForm.nome.$invalid" class="alert alert-danger">
-            Por favor preencha o Telefône
+
+        <div ng-messages="contatoForm.telefone.$error">
+            <div ng-message="pattern" class="alert alert-danger">
+                Campo Telefone inválido
+            </div>
+            <div ng-message="required" class="alert alert-danger">
+                Por favor preencha o Telefone
+            </div>
         </div>
+
+        <div ng-messages="contatoForm.operadoras.$error">
+            <div ng-message="required" class="alert alert-danger">
+                Por favor selecione uma operadora
+            </div>
+        </div>
+
         <button type="button" class="btn btn-primary btn-block" ng-click="AdicuionarContatos(contato)" ng-disabled="contatoForm.$invalid">Salvar</button>
         <button type="button" class="btn btn-danger btn-block" ng-click="ApagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar Contatos</button>
     </div>
