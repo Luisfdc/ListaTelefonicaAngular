@@ -26,6 +26,11 @@
                 nome: "Babys",
                 telefone: "1146774348"
             }, ];
+
+            $scope.AdicuionarContatos = function(contato) {
+                $scope.contatos.push(angular.copy(contato));
+                delete $scope.contato;
+            }
         });
     </script>
 </head>
@@ -43,6 +48,9 @@
                 <td>{{contato.telefone}}</td>
             </tr>
         </table>
+        <input type="text" class="form-control" ng-model="contato.nome" name="nome" placeholder="Digite o Nome" />
+        <input type="text" class="form-control" ng-model="contato.telefone" name="telefone" placeholder="Digite o Telefone" />
+        <button type="button" class="btn btn-primary" ng-click="AdicuionarContatos(contato)" ng-disabled="!contato.nome || !contato.telefone">Salvar</button>
     </div>
 
 
