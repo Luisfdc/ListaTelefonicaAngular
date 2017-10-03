@@ -130,25 +130,25 @@
         </form>
 
         <div ng-messages="contatoForm.nome.$error">
-            <div ng-message="required" class="alert alert-danger">
+            <div ng-message="required" ng-if="contatoForm.nome.$dirty" class="alert alert-danger">
                 Por favor preencha o Nome
             </div>
-            <div ng-message="minlength" class="alert alert-danger">
+            <div ng-message="minlength" ng-if="contatoForm.nome.$dirty" class="alert alert-danger">
                 Campo nome deve ter mais que 4 caracteres
             </div>
         </div>
 
         <div ng-messages="contatoForm.telefone.$error">
-            <div ng-message="pattern" class="alert alert-danger">
+            <div ng-message="pattern" ng-if="contatoForm.telefone.$dirty" class="alert alert-danger">
                 Campo Telefone inválido
             </div>
-            <div ng-message="required" class="alert alert-danger">
+            <div ng-message="required" ng-if="contatoForm.telefone.$dirty" class="alert alert-danger">
                 Por favor preencha o Telefone
             </div>
         </div>
 
         <div ng-messages="contatoForm.operadoras.$error">
-            <div ng-message="required" class="alert alert-danger">
+            <div ng-message="required" ng-if="contatoForm.operadoras.$dirty" class="alert alert-danger">
                 Por favor selecione uma operadora
             </div>
         </div>
