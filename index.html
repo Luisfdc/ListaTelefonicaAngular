@@ -42,7 +42,7 @@
     <script type="text/javascript" src="lib/angular-locale_pt-br.js"></script>
     <script>
         angular.module("ListaTelefonica", ["ngMessages"]);
-        angular.module("ListaTelefonica").controller("ListaTelefonicaCtrl", function($scope) {
+        angular.module("ListaTelefonica").controller("ListaTelefonicaCtrl", function($scope, $filter) {
             $scope.app = "Lista Telefonica";
 
             $scope.operadoras = [{
@@ -73,19 +73,19 @@
             }]
 
             $scope.contatos = [{
-                nome: "Pedro",
+                nome: $filter('uppercase')("Pedro"),
                 telefone: "1321654654",
                 cor: "red",
                 operadora: $scope.operadoras[1],
                 data: new Date()
             }, {
-                nome: "Ana",
+                nome: $filter('uppercase')("Ana"),
                 telefone: "1321654654",
                 cor: "blue",
                 operadora: $scope.operadoras[2],
                 data: new Date()
             }, {
-                nome: "Maria",
+                nome: $filter('uppercase')("Maria"),
                 telefone: "1321654654",
                 cor: "yellow",
                 operadora: $scope.operadoras[3],
@@ -132,9 +132,9 @@
             </tr>
             <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter: {nome:criterioDeBusca} | orderBy:criterioDeOdenacao:direcaoDaOrdenacao">
                 <th><input type="checkbox" ng-model="contato.selecionado" /></th>
-                <td>{{contato.nome | uppercase}}</td>
+                <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
-                <td>{{contato.operadora.nome | lowercase}}</td>
+                <td>{{contato.operadora.nome}}</td>
                 <td>{{contato.data | date:"dd/MM/yyyy hh:mm"}}</td>
                 <td>
                     <div class="color" ng-style="{'background-color': contato.cor}"></div>
