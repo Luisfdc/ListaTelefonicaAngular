@@ -42,56 +42,24 @@
     <script type="text/javascript" src="lib/angular-locale_pt-br.js"></script>
     <script>
         angular.module("ListaTelefonica", ["ngMessages"]);
-        angular.module("ListaTelefonica").controller("ListaTelefonicaCtrl", function($scope, $filter) {
+        angular.module("ListaTelefonica").controller("ListaTelefonicaCtrl", function($scope, $filter, $http) {
             $scope.app = "Lista Telefonica";
+            $scope.contatos = [];
 
-            $scope.operadoras = [{
-                nome: "Oi",
-                codigo: 14,
-                categoria: "Celular",
-                preco: 1.36
-            }, {
-                nome: "Tim",
-                codigo: 41,
-                categoria: "Celular",
-                preco: 1.24
-            }, {
-                nome: "Vivo",
-                codigo: 15,
-                categoria: "Celular",
-                preco: 1.98
-            }, {
-                nome: "Embratel",
-                codigo: 21,
-                categoria: "Fixo",
-                preco: 1.45
-            }, {
-                nome: "GVT",
-                codigo: 25,
-                categoria: "Fixo",
-                preco: 1.58
-            }]
+            var carregarContatos = function() {
+                $http.get("http://localhost:3000/contatos").then(function(dados) {
+                    $scope.contatos = dados.data;
+                });
+            }
 
-            $scope.contatos = [{
-                nome: $filter('uppercase')("Pedro"),
-                telefone: "1321654654",
-                cor: "red",
-                operadora: $scope.operadoras[1],
-                data: new Date()
-            }, {
-                nome: $filter('uppercase')("Ana"),
-                telefone: "1321654654",
-                cor: "blue",
-                operadora: $scope.operadoras[2],
-                data: new Date()
-            }, {
-                nome: $filter('uppercase')("Maria"),
-                telefone: "1321654654",
-                cor: "yellow",
-                operadora: $scope.operadoras[3],
-                data: new Date()
-            }, ];
+            $scope.operadoras = []
 
+
+            var carregarOperadoras = function() {
+                $http.get("http://localhost:3000/operadoras").then(function(dados) {
+                    $scope.operadoras = dados.data;
+                });
+            }
 
             $scope.AdicuionarContatos = function(contato) {
                 $scope.contatos.push(angular.copy(contato));
@@ -113,6 +81,8 @@
                 $scope.criterioDeOdenacao = campo;
                 $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
             }
+            carregarContatos();
+            carregarOperadoras();
         });
     </script>
 </head>
